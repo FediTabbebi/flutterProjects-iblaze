@@ -17,19 +17,28 @@ exports.register = ((req) => {
 // add new truck
 exports.addtruck = (async (req, res) => {
   try {
+    const truck = this.register({
+      "truckModel": req.body.truckModel,
+      "truckLicense": req.body.truckLicense,
+    })
     const upconducteur = await Conducteur.updateOne({
       _id: req.body.conducteur
     }, {
       $addToSet: {
-        truck: req.body.truck
+        truck: truck._id
       }
     })
     if (upconducteur.modifiedCount == 1)
       res.status(200).json("truck updated");
-    else
-      res.status(300).json("can't update")
+    else{
+      const deletetruck= this.deletetrucknotregister(truck["id"]);
+      if (deletetruck!=null)
+      return res.status(300).json("can't update") ;
+      else
+      return res.status(500).json("error wrong truck in database need fix")
+    }
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       message: err.message
     })
   }
