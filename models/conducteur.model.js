@@ -24,7 +24,7 @@ const ConducteurSchema = new Schema({
   },
   status:{
     type:String,
-    default:"accepted",
+    default:"pending",
   },
   usernamelist: {
     type: [String] 

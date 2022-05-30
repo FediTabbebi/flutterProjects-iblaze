@@ -2,6 +2,7 @@ const bcrypt = require("bcryptjs");
 const conducteurServices = require("../services/conducteur.services");
 const Conducteur = require("../models/conducteur.model");
 const truckController = require('../controllers/truck.controller')
+const User = require("../models/user.model");
 
 //Login
 exports.login = (req, res, next) => {
@@ -54,7 +55,7 @@ exports.register = (req, res, next) => {
       "truck": register["id"],
       "usernamelist": [req.body.username]
     }
-    conducteurServices.register(params, (error, results) => {
+    conducteurServices.register(params, async (error, results) => {
       if (error) {
         const deletetruck= truckController.deletetrucknotregister(register["id"]);
         if (deletetruck!=null)
@@ -62,6 +63,8 @@ exports.register = (req, res, next) => {
         else
         return res.status(500).json("error wrong truck in database need fix")
       }
+    const user=  await User.findOneAndUpdate({email:req.body.email},{isdriver:"pending"})
+    console.log(user)
       return res.status(200).send({
         message: "Success",
         data: results,
@@ -70,7 +73,7 @@ exports.register = (req, res, next) => {
   } else
   {
     return res.status(500).json({
-      message: "error fields"
+      message: "error truck fields"
     })
   }
 };

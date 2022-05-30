@@ -20,8 +20,8 @@ const UserSchema = new Schema({
     required: true,
   },
   isdriver: {
-    type: Boolean,
-    default: false,
+    type: String,
+    default: "none",
   },
   status: {
     type: String,
