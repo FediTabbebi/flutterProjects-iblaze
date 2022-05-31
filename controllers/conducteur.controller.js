@@ -18,7 +18,7 @@ exports.login = (req, res, next) => {
     if (error) {
       return next(error);
     }
-    if (results["status"] == "accepted") {
+    if (results["status"] == "active") {
       return res.status(200).send({
         message: "Success",
         data: results,
