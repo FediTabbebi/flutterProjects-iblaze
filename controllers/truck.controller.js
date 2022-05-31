@@ -18,8 +18,10 @@ exports.register = ((req) => {
 exports.addtruck = (async (req, res) => {
   try {
     const truck = this.register({
-      "truckModel": req.body.truckModel,
-      "truckLicense": req.body.truckLicense,
+     "truckModel": req.body.truckModel,
+     "truckLicense": req.body.truckLicense,
+     "truckImage":req.body.truckImage,
+     "truckPapers":req.body.truckPapers
     })
     const upconducteur = await Conducteur.updateOne({
       _id: req.body.conducteur
