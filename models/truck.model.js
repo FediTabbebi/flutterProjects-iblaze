@@ -7,7 +7,7 @@ const uniqueValidator = require("mongoose-unique-validator");
 const TruckSchema = new Schema({
   truckModel: {
     type: String,
-    required: true,
+    required: true
   },
   truckLicense: {
     type: String,
@@ -16,22 +16,23 @@ const TruckSchema = new Schema({
   truckImage: {
     type: Schema.Types.ObjectId,
     ref:"imageModel",
+    required: true
   },
-  truckPapers: {
-    type: [Schema.Types.ObjectId],
+  truckPaper: {
+    type: Schema.Types.ObjectId,
     ref:"imageModel",
+    required: true,
   },
 
   status: {
     type: String,
-    default: "active",
+    default: "pending",
   },
   date: {
     type: Date,
     default: Date.now(),
   },
 });
-
 
 TruckSchema.set("toJSON", {
   transform: (document, returnedObject) => {

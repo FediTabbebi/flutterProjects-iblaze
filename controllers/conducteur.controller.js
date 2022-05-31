@@ -40,7 +40,7 @@ exports.register = ((req, res, next) => {
      "truckModel": req.body.truckModel,
      "truckLicense": req.body.truckLicense,
      "truckImage":req.body.truckImage,
-     "truckPapers":req.body.truckPapers
+     "truckPaper":req.body.truckPaper
    })
    if (register != null) {
      const {
@@ -55,7 +55,9 @@ exports.register = ((req, res, next) => {
        "email": req.body.email,
        "password": req.body.password,
        "truck": register["id"],
-       "usernamelist": [req.body.username]
+       "usernamelist": [req.body.username],
+       "cin":req.body.cin,
+       "drivingLicense":req.body.drivingLicense
      }
      conducteurServices.register(params, async (error, results) => {
        if (error) {

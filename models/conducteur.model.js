@@ -1,5 +1,7 @@
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
+const {
+  Schema
+} = mongoose;
 const uniqueValidator = require("mongoose-unique-validator");
 
 
@@ -18,16 +20,26 @@ const ConducteurSchema = new Schema({
     type: String,
     required: true,
   },
-  truck:{
+  truck: {
     type: [Schema.Types.ObjectId],
-    ref:"truck",
+    ref: "truck",
   },
-  status:{
-    type:String,
-    default:"pending",
+  drivingLicense: {
+    type: Schema.Types.ObjectId,
+    ref: "imageModel",
+    required: true,
+  },
+  cin: {
+    type: Schema.Types.ObjectId,
+    ref: "imageModel",
+    required: true,
+  },
+  status: {
+    type: String,
+    default: "pending",
   },
   usernamelist: {
-    type: [String] 
+    type: [String]
   },
   date: {
     type: Date,
@@ -46,7 +58,9 @@ ConducteurSchema.set("toJSON", {
 });
 
 
-ConducteurSchema.plugin(uniqueValidator, { message: "Email already in use." });
+ConducteurSchema.plugin(uniqueValidator, {
+  message: "Email already in use."
+});
 
 const Conducteur = mongoose.model("conductor", ConducteurSchema);
 module.exports = Conducteur;

@@ -4,7 +4,7 @@ const ConducteurOffer=require('../models/conducteuroffer.model')
 
 exports.register = ((req) => {
   try {
-    if (req["truckModel"] == undefined || req["truckLicense"] == undefined || req["truckImage"] == undefined || req["truckPapers"] == undefined ||req["truckModel"] == "" || req["truckLicense"] == "")
+    if (req["truckModel"] == undefined || req["truckLicense"] == undefined || req["truckImage"] == undefined || req["truckPaper"] == undefined ||req["truckModel"] == "" || req["truckLicense"] == "")
       return null;
     const truck = new Truck(req);
     truck.save();
@@ -21,7 +21,7 @@ exports.addtruck = (async (req, res) => {
      "truckModel": req.body.truckModel,
      "truckLicense": req.body.truckLicense,
      "truckImage":req.body.truckImage,
-     "truckPapers":req.body.truckPapers
+     "truckPaper":req.body.truckPaper
     })
     const upconducteur = await Conducteur.updateOne({
       _id: req.body.conducteur
