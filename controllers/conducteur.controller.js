@@ -34,49 +34,50 @@ exports.login = (req, res, next) => {
 };
 
 // Creating one
-exports.register = (req, res, next) => {
-
-  const register = truckController.register({
-    "truckModel": req.body.truckModel,
-    "truckLicense": req.body.truckLicense,
-  })
-  if (register != null) {
-    const {
-      password
-    } = req.body;
-
-    const salt = bcrypt.genSaltSync(10);
-
-    req.body.password = bcrypt.hashSync(password, salt);
-    const params = {
-      "username": req.body.username,
-      "email": req.body.email,
-      "password": req.body.password,
-      "truck": register["id"],
-      "usernamelist": [req.body.username]
-    }
-    conducteurServices.register(params, async (error, results) => {
-      if (error) {
-        const deletetruck= truckController.deletetrucknotregister(register["id"]);
-        if (deletetruck!=null)
-        return next(error);
-        else
-        return res.status(500).json("error wrong truck in database need fix")
-      }
-    const user=  await User.findOneAndUpdate({email:req.body.email},{isdriver:"pending"})
-    console.log(user)
-      return res.status(200).send({
-        message: "Success",
-        data: results,
-      });
-    });
-  } else
-  {
-    return res.status(500).json({
-      message: "error truck fields"
-    })
-  }
-};
+exports.register = ((req, res, next) => {
+ 
+   const register = truckController.register({
+     "truckModel": req.body.truckModel,
+     "truckLicense": req.body.truckLicense,
+     "truckImage":req.body.truckImage,
+     "truckPapers":req.body.truckPapers
+   })
+   if (register != null) {
+     const {
+       password
+     } = req.body;
+ 
+     const salt = bcrypt.genSaltSync(10);
+ 
+     req.body.password = bcrypt.hashSync(password, salt);
+     const params = {
+       "username": req.body.username,
+       "email": req.body.email,
+       "password": req.body.password,
+       "truck": register["id"],
+       "usernamelist": [req.body.username]
+     }
+     conducteurServices.register(params, async (error, results) => {
+       if (error) {
+         const deletetruck= truckController.deletetrucknotregister(register["id"]);
+         if (deletetruck!=null)
+         return next(error);
+         else
+         return res.status(500).json("error wrong truck in database need fix")
+       }
+     const user=  await User.findOneAndUpdate({email:req.body.email},{isdriver:"pending"})
+       return res.status(200).send({
+         message: "Success",
+         data: results,
+       });
+     });
+   } else
+   {
+     return res.status(500).json({
+       message: "error truck fields"
+     })
+   }
+ });
 // Updating One
 exports.update = (async (req, res) => {
   try {

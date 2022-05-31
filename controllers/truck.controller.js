@@ -4,7 +4,7 @@ const ConducteurOffer=require('../models/conducteuroffer.model')
 
 exports.register = ((req) => {
   try {
-    if (req["truckModel"] == undefined || req["truckLicense"] == undefined)
+    if (req["truckModel"] == undefined || req["truckLicense"] == undefined || req["truckImage"] == undefined || req["truckPapers"] == undefined ||req["truckModel"] == "" || req["truckLicense"] == "")
       return null;
     const truck = new Truck(req);
     truck.save();

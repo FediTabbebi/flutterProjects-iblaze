@@ -3,16 +3,11 @@ const app = express();
 const mongoose = require("mongoose");
 
 
-
-//const multer =require("multer");
-//const ImageModel=require('./models/image.model');
-
 const dbConfig = require("./config/db.config");
 
 const auth = require("./middlewares/auth.js");
 const errors = require("./middlewares/errors.js");
 const unless = require("express-unless");
-var id;
 // connect to mongodb
 
 mongoose.Promise = global.Promise;
@@ -133,6 +128,10 @@ app.use(
         url: "/users/test",
         methods: ["POST"]
       },
+      {
+        url: "/image/upload",
+        methods: ["POST"]
+      },
       
     ],
   })
@@ -154,6 +153,10 @@ app.use("/conducteur/offer", require("./routes/conducteuroffer.routes"));
 app.use("/users/deliveryType", require("./routes/deliveryType.routes"));
 
 app.use("/conducteur/truck", require("./routes/truck.routes"));
+
+app.use("/image", require("./routes/image.routes"));
+
+
 
 
 // middleware for error responses

@@ -13,6 +13,15 @@ const TruckSchema = new Schema({
     type: String,
     required: true,
   },
+  truckImage: {
+    type: Schema.Types.ObjectId,
+    ref:"imageModel",
+  },
+  truckPapers: {
+    type: [Schema.Types.ObjectId],
+    ref:"imageModel",
+  },
+
   status: {
     type: String,
     default: "active",
