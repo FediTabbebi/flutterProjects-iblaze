@@ -44,11 +44,11 @@ app.use(
         methods: ["PATCH"]
       },
       {
-        url: "/conducteur/register",
+        url: "/users/status",
         methods: ["POST"]
       },
       {
-        url: "/conducteur/status",
+        url: "/conducteur/register",
         methods: ["POST"]
       },
       {

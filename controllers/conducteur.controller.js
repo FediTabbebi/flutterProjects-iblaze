@@ -109,18 +109,3 @@ exports.update = (async (req, res) => {
     })
   }
 });
-exports.status = async (req, res) => {
-
-try{
-  const conducteur =await Conducteur.findById(req.body.conducteur)
-  res.status(200).json({
-   status:conducteur.status
-  })
-
-}catch (err) {
-  res.status(500).json({
-    message: err.message
-  })
-}
-
-}

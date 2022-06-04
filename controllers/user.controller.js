@@ -1,4 +1,4 @@
-const bcrypt = require("bcryptjs");
+
 const userServices = require("../services/user.services");
 const User = require("../models/user.model");
 
@@ -79,5 +79,20 @@ exports.update = (async (req, res) => {
     })
   }
 });
+exports.status = async (req, res) => {
+
+  try{
+    const user =await User.findById(req.body.user)
+    res.status(200).json({
+      isdriver:user.isdriver
+    })
+  
+  }catch (err) {
+    res.status(500).json({
+      message: err.message
+    })
+  }
+  
+  }
 
 
