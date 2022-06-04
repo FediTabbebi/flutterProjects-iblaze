@@ -55,7 +55,12 @@ exports.getacceptedoffersbyconducteur = (async (req, res) => {
     const conducteuroffer = await Conducteuroffer.find({
       conducteur: req.body.conducteur,
       status: req.body.status
-    }).populate('conducteur').populate('offer').populate('truck')
+    }).populate('conducteur').populate('truck').populate({
+      path : 'offer',
+      populate : {
+        path : 'user'
+      }
+    })
     res.status(200).json(conducteuroffer)
   } catch (err) {
     res.status(500).json({
