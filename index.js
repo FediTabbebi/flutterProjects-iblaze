@@ -48,6 +48,10 @@ app.use(
         methods: ["POST"]
       },
       {
+        url: "/conducteur/status",
+        methods: ["POST"]
+      },
+      {
         url: "/conducteur/login",
         methods: ["POST"]
       },

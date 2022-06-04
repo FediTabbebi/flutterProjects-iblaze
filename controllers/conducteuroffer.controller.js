@@ -19,8 +19,6 @@ exports.register = (async (req, res) => {
   res.status(200).json({"message": "Success","data":register});
 });
 
-
-
 // Getting all
 exports.getAll = (async (req, res) => {
   try {
@@ -51,15 +49,14 @@ exports.getAll = (async (req, res) => {
     })
   }
 })
-//Getting accepted offers by conducteur
+//Getting accepted proposition by conducteur
 exports.getacceptedoffersbyconducteur = (async (req, res) => {
   try {
     const conducteuroffer = await Conducteuroffer.find({
       conducteur: req.body.conducteur,
-      completeoffer: req.body.completeoffer,
-      status: "active"
+      status: req.body.status
     }).populate('conducteur').populate('offer').populate('truck')
-    res.json(conducteuroffer)
+    res.status(200).json(conducteuroffer)
   } catch (err) {
     res.status(500).json({
       message: err.message
@@ -76,7 +73,7 @@ exports.delete = (async (req, res) => {
       "message": "success delete"
     });
   } catch (err) {
-    res.status(300).json({
+    res.status(500).json({
       message: err.message
     })
   }

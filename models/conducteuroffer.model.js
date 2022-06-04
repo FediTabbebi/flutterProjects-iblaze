@@ -25,10 +25,6 @@ const ConducteurofferSchema = new Schema({
   description:{
     type: String,
   },
-  completeoffer:{
-    type: Boolean,
-    default:false,
-  },
   status: {
     type: String,
     default: "active",

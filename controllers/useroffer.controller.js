@@ -1,6 +1,6 @@
 const Offer = require("../models/offer.model");
 const Conducteuroffer = require("../models/conducteuroffer.model");
-const offerServer=require('../services/useroffer.services')
+const offerServer = require('../services/useroffer.services')
 
 
 
@@ -17,7 +17,10 @@ exports.register = (async (req, res) => {
       "message": register["message"]
     })
   else
-  res.status(200).json({"message": "Success","data":register});
+    res.status(200).json({
+      "message": "Success",
+      "data": register
+    });
 });
 
 // Updating One
@@ -42,8 +45,8 @@ exports.update = (async (req, res) => {
         "quantity": offer["quantity"],
         "time": offer["time"],
         "load": offer["load"],
-        "status":"updated",
-        "originaloffer":offer["_id"],
+        "status": "updated",
+        "originaloffer": offer["_id"],
       });
 
       if (register["errtype"] == "1")
@@ -128,13 +131,12 @@ exports.getByuser = (async (req, res) => {
 })
 
 
-// Get accepted offers by user
+// Get offers have proposition by user
 exports.getacceptedoffersbyuser = (async (req, res) => {
   const userlist = [];
   try {
     const conducteuroffer = await Conducteuroffer.find({
-      completeoffer: req.body.completeoffer,
-      status: "active"
+      status: req.body.status
     }).populate('conducteur').populate('offer').populate('truck')
     conducteuroffer.forEach((function (e) {
       if (e["offer"]["user"] == req.body.user)
@@ -147,22 +149,38 @@ exports.getacceptedoffersbyuser = (async (req, res) => {
     })
   }
 })
-// user accepte offer
+// user accepte proposition
 exports.useraccepteoffer = (async (req, res) => {
   try {
     const upconducteuroffer = await Conducteuroffer.updateOne({
-      _id: req.body.id
+      _id: req.body.conducteuroffer
     }, {
-      completeoffer: true
+      status: "finished"
     })
+    await Offer.updateOne({
+      _id: req.body.offer
+    }, {
+      status: "finished"
+    })
+    const conducteuroffers = await Conducteuroffer.find({
+      offer: req.body.offer,
+      status: "active",
+    })
+    conducteuroffers.forEach(async (conducteuroffer) => {
+      await Conducteuroffer.findOneAndUpdate({
+        _id: conducteuroffer._id,
+      }, {
+        status: "rejected"
+      })
+    })
+    
     if (upconducteuroffer.modifiedCount == 1)
       res.status(200).json("success update")
     else
-      res.status(300).json("can't update")
+      res.status(400).json("can't update")
   } catch (err) {
-    res.status(400).json({
+    res.status(500).json({
       message: err.message
     })
   }
 });
-
