@@ -80,32 +80,4 @@ exports.register = ((req, res, next) => {
      })
    }
  });
-// Updating One
-exports.update = (async (req, res) => {
-  try {
 
-    if (req.body.username != "" && req.body.username != null) {
-      const updateconducteur = await Conducteur.updateOne({
-        _id: req.body.conducteur
-      }, {
-        $addToSet: {
-          usernamelist: req.body.username
-        },
-        username:req.body.username        
-      })
-      if (updateconducteur.modifiedCount == 1)
-        res.status(200).json({"message":"username updated","data":req.body.username});
-      else
-        res.status(300).json("there is no modification")
-
-    } else
-      res.status(400).json({
-        "message": "username can't be empty"
-      })
-
-  } catch (err) {
-    res.status(500).json({
-      message: err.message
-    })
-  }
-});

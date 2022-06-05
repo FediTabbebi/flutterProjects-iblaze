@@ -5,8 +5,7 @@ const express = require("express");
 const router = express.Router();
 
 router.post("/register", conducteurController.register);
-router.post("/login", conducteurController.login);
-router.patch('/update',conducteurController.update);
+router.post("/login", conducteurController.login)
 
 
 

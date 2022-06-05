@@ -56,10 +56,6 @@ app.use(
         methods: ["POST"]
       },
       {
-        url: "/conducteur/update",
-        methods: ["PATCH"]
-      },
-      {
         url: "/users/offer/register",
         methods: ["POST"]
       },

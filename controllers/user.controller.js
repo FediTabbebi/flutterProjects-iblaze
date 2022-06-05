@@ -1,6 +1,7 @@
-
 const userServices = require("../services/user.services");
 const User = require("../models/user.model");
+const Conducteur = require("../models/conducteur.model");
+const Conducteuroffer = require("../models/conducteuroffer.model");
 
 
 
@@ -61,11 +62,19 @@ exports.update = (async (req, res) => {
         $addToSet: {
           usernamelist: req.body.username
         },
-        username:req.body.username        
+        username: req.body.username
       })
-      if (updateuser.modifiedCount == 1)
+      if (updateuser.modifiedCount == 1) {
+        await Conducteur.updateOne({
+          email: user.email
+        }, {
+          $addToSet: {
+            usernamelist: req.body.username
+          },
+          username: req.body.username
+        })
         res.status(200).json({"message":"username updated","data":req.body.username});
-      else
+      } else
         res.status(300).json("there is no modification")
 
     } else
@@ -81,18 +90,16 @@ exports.update = (async (req, res) => {
 });
 exports.status = async (req, res) => {
 
-  try{
-    const user =await User.findById(req.body.user)
+  try {
+    const user = await User.findById(req.body.user)
     res.status(200).json({
-      isdriver:user.isdriver
+      isdriver: user.isdriver
     })
-  
-  }catch (err) {
+
+  } catch (err) {
     res.status(500).json({
       message: err.message
     })
   }
-  
-  }
 
-
+}
